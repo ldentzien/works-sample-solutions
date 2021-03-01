@@ -27,11 +27,9 @@ const queryHandler = (req, res, next) => {
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static(path.join(__dirname, '/public')));
 
-// app.get('/', async (req, res) => {
-//   // res.send('Welcome to EQ Works 😎')
-//   res.sendFile('./public/index.html' , { root : __dirname} );
-//   // res.sendFile(path.join(__dirname, "public", "index.html"));
-// })
+app.get('/', async (req, res) => {
+  res.send('Welcome to EQ Works 😎')
+})
 
 app.get('/events/hourly', (req, res, next) => {
   req.sqlQuery = `
@@ -40,8 +38,6 @@ app.get('/events/hourly', (req, res, next) => {
   ORDER BY date, hour
   LIMIT 168;
 `
-// res.sendFile('./public/index.html' , { root : __dirname} );
-// res.json({data: queryHandler})
   return next()
 }, queryHandler)
 
