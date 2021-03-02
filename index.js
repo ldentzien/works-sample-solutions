@@ -3,7 +3,7 @@ const { Pool } = require('pg')
 const path = require('path');
 const pg = require('pg')
 require('dotenv').config()
-const rateLimiter = require('./rateLimiter.js')
+// const rateLimiter = require('./rateLimiter.js')
 
 const app = express()
 // configs come from standard PostgreSQL env vars
@@ -26,11 +26,11 @@ const queryHandler = (req, res, next) => {
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.get('/', rateLimiter, async (req, res) => {
+app.get('/', /*rateLimiter,*/ async (req, res) => {
   res.send('Welcome to EQ Works 😎')
 })
 
-app.get('/events/hourly', rateLimiter, (req, res, next) => {
+app.get('/events/hourly',  /*rateLimiter,*/  (req, res, next) => {
   req.sqlQuery = `
   SELECT date, hour, events
   FROM public.hourly_events
@@ -40,7 +40,7 @@ app.get('/events/hourly', rateLimiter, (req, res, next) => {
   return next()
 }, queryHandler)
 
-app.get('/events/daily', rateLimiter, (req, res, next) => {
+app.get('/events/daily',  /*rateLimiter,*/ (req, res, next) => {
   req.sqlQuery = `
     SELECT date, SUM(events) AS events
     FROM public.hourly_events
@@ -51,7 +51,7 @@ app.get('/events/daily', rateLimiter, (req, res, next) => {
   return next()
 }, queryHandler)
 
-app.get('/stats/hourly', rateLimiter, (req, res, next) => {
+app.get('/stats/hourly',  /*rateLimiter,*/ (req, res, next) => {
   req.sqlQuery = `
     SELECT date, hour, impressions, clicks, revenue
     FROM public.hourly_stats
@@ -61,7 +61,7 @@ app.get('/stats/hourly', rateLimiter, (req, res, next) => {
   return next()
 }, queryHandler)
 
-app.get('/stats/daily', rateLimiter, (req, res, next) => {
+app.get('/stats/daily',  /*rateLimiter,*/ (req, res, next) => {
   req.sqlQuery = `
     SELECT date,
         SUM(impressions) AS impressions,
@@ -75,7 +75,7 @@ app.get('/stats/daily', rateLimiter, (req, res, next) => {
   return next()
 }, queryHandler)
 
-app.get('/poi', rateLimiter, (req, res, next) => {
+app.get('/poi', /*rateLimiter,*/ (req, res, next) => {
   req.sqlQuery = `
     SELECT *
     FROM public.poi;
@@ -85,7 +85,7 @@ app.get('/poi', rateLimiter, (req, res, next) => {
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
-app.get('*', rateLimiter, (req, res) => {
+app.get('*', /*rateLimiter,*/ (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
