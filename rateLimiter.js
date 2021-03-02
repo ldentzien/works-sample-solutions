@@ -2,8 +2,8 @@ const moment = require('moment');
 const redis = require('redis');
 
 const redisClient = redis.createClient();
-const WINDOW_SIZE_IN_HOURS = 24;
-const MAX_WINDOW_REQUEST_COUNT = 100;
+const WINDOW_SIZE_IN_HOURS = 1;
+const MAX_WINDOW_REQUEST_COUNT = 5;
 const WINDOW_LOG_INTERVAL_IN_HOURS = 0;
 
 module.exports = (req, res, next) => {

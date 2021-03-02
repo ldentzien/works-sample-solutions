@@ -3,7 +3,7 @@ const { Pool } = require('pg')
 const path = require('path');
 const pg = require('pg')
 require('dotenv').config()
-// const rateLimiter = require('./rateLimiter.js')
+const rateLimiter = require('./rateLimiter.js')
 
 const app = express()
 // configs come from standard PostgreSQL env vars
@@ -26,7 +26,7 @@ const queryHandler = (req, res, next) => {
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static(path.join(__dirname, '/public')));
 
-app.get('/', async (req, res) => {
+app.get('/', rateLimiter, async (req, res) => {
   res.send('Welcome to EQ Works 😎')
 })
 
