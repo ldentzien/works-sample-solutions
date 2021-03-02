@@ -25,8 +25,9 @@ class App extends Component {
 
 componentDidMount(){
   this.updateDailyData();
-  document.getElementById('charts').style.display = 'none';
-  document.getElementById('map').style.display = 'none';
+  this.updateFirstSolution();
+  this.updateSecondSolution();
+  this.updateThirdSolution();
 }
 
 updateDailyData = () => {

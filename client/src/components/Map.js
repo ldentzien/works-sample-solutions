@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import { fetchPoiTable } from '../dataFetch'
 
-const Marker = ({ text }) => <div style={{color: 'blue', fontSize: '2em'}}>{text}</div>;
+const Marker = ({ text }) => <div style={{width: '120px', color: 'black', fontSize: '2em', backgroundColor: '#f8f9fa', borderRadius: '20px', border: '2px solid red'}} >{text}</div>;
 
 class Map extends Component {
     constructor(props) {
