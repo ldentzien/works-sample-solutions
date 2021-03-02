@@ -2,7 +2,6 @@ const express = require('express')
 const { Pool } = require('pg')
 const path = require('path');
 const pg = require('pg')
-// console.log('pg version: ' + require('pg/package.json').version);
 require('dotenv').config()
 // const rateLimiter = require('./rateLimiter.js')
 
