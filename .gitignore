@@ -57,3 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
+# ds, dump files
+.DS_Store
+.dumb.rdb
