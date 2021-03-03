@@ -11,3 +11,4 @@ Work Solution for Product Aspect, Node.js Variant
 7. Navigate to `$ cd client` and run `$ npm start`
 8. Open your browser and point to `localhost:5555` and you should see the app `EQ Works`
 
+*Inside client folder put a .env file with a google maps key.
