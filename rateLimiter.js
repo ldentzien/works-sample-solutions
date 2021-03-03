@@ -1,5 +1,5 @@
 const moment = require('moment');
-var redisClient = require("redis").createClient();
+var redisClient = require("redis").createClient(process.env.REDISTOGO_URL);
 
 if (process.env.REDISTOGO_URL) {
   // TODO: redistogo connection

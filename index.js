@@ -4,6 +4,7 @@ const path = require('path');
 const pg = require('pg')
 require('dotenv').config()
 // const rateLimiter = require('./rateLimiter.js')
+const rateLimiter = require('./rateLimiter.js')
 
 const app = express()
 // configs come from standard PostgreSQL env vars
@@ -25,6 +26,8 @@ const queryHandler = (req, res, next) => {
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.use(rateLimiter);
 
 app.get('/', async (req, res) => {
   res.send('Welcome to EQ Works 😎')
