@@ -1,7 +1,16 @@
 const moment = require('moment');
-const redis = require("redis");
+var redisClient = require("redis").createClient();
 
-const redisClient = redis.createClient(process.env.REDISTOGO_URL);
+if (process.env.REDISTOGO_URL) {
+  // TODO: redistogo connection
+  var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+  var redisClient = require("redis").createClient(rtg.port, rtg.hostname);
+
+  redisClient.auth(rtg.auth.split(":")[1]);
+} else {
+  var redisClient = require("redis").createClient();
+}
+
 const WINDOW_SIZE_IN_HOURS = 1;
 const MAX_WINDOW_REQUEST_COUNT = 10;
 const WINDOW_LOG_INTERVAL_IN_HOURS = 0;
