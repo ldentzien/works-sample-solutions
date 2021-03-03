@@ -1,8 +1,9 @@
 const moment = require('moment');
-var redisClient = require("redis").createClient(process.env.REDIS_URL);
+const redis = require("redis");
+const redisClient = redis.createClient();
 
 const WINDOW_SIZE_IN_HOURS = 1;
-const MAX_WINDOW_REQUEST_COUNT = 10;
+const MAX_WINDOW_REQUEST_COUNT = 50;
 const WINDOW_LOG_INTERVAL_IN_HOURS = 0;
 
 module.exports = (req, res, next) => {
@@ -45,6 +46,7 @@ module.exports = (req, res, next) => {
         res
           .status(429)
           .json(`HTTP/1.1 429 Too Many Requests  Content-Type: text/html  You have exceeded the ${MAX_WINDOW_REQUEST_COUNT} requests in ${WINDOW_SIZE_IN_HOURS} hrs limit!`);
+          console.log(`HTTP/1.1 429 Too Many Requests  Content-Type: text/html  You have exceeded the ${MAX_WINDOW_REQUEST_COUNT} requests in ${WINDOW_SIZE_IN_HOURS} hrs limit!`);
       } else {
         // if number of requests made is less than allowed maximum, log new entry
         let lastRequestLog = data[data.length - 1];

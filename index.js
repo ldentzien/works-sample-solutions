@@ -3,7 +3,6 @@ const { Pool } = require('pg')
 const path = require('path');
 const pg = require('pg')
 require('dotenv').config()
-// const rateLimiter = require('./rateLimiter.js')
 const rateLimiter = require('./rateLimiter.js')
 
 const app = express()
@@ -27,6 +26,10 @@ const queryHandler = (req, res, next) => {
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
+app.get('/', rateLimiter, (req, res, next) => {
+  res.send('Welcome To EQ Works!');
+})
+
 app.get('/events/hourly', rateLimiter, (req, res, next) => {
   req.sqlQuery = `
   SELECT date, hour, events
@@ -48,7 +51,7 @@ app.get('/events/daily', rateLimiter, (req, res, next) => {
   return next()
 }, queryHandler)
 
-app.get('/stats/hourly', (req, res, next) => {
+app.get('/stats/hourly', rateLimiter, (req, res, next) => {
   req.sqlQuery = `
     SELECT date, hour, impressions, clicks, revenue
     FROM public.hourly_stats
@@ -58,7 +61,7 @@ app.get('/stats/hourly', (req, res, next) => {
   return next()
 }, queryHandler)
 
-app.get('/stats/daily', (req, res, next) => {
+app.get('/stats/daily', rateLimiter, (req, res, next) => {
   req.sqlQuery = `
     SELECT date,
         SUM(impressions) AS impressions,
@@ -72,7 +75,7 @@ app.get('/stats/daily', (req, res, next) => {
   return next()
 }, queryHandler)
 
-app.get('/poi', (req, res, next) => {
+app.get('/poi', rateLimiter, (req, res, next) => {
   req.sqlQuery = `
     SELECT *
     FROM public.poi;
